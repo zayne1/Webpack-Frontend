@@ -1,0 +1,5 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+/* All of the other imports comes after the bootstrap so we can overwrite it ! */
+@import "bootstrap-navbar-fixed-top.css";
+@import "~animate.css/animate.min.css";

@@ -1,0 +1,21 @@
+$primary-color: red;
+h1 {
+    background: $primary-color;
+}
+
+.user-profile-icon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: url('https://www.tutorialkart.com/sample_image_small.jpg'),
+}
+
+a.avatar img {
+    display: inline;
+    // width: 20%;
+    width: 24px;
+    // height: 20%;
+}
