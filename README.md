@@ -10,3 +10,6 @@ npm run build
 
 # Run a Dev server with live reloading
 npm run dev
+
+# View current output online
+https://zero-alpha.co.za/webpack-front-end-test
