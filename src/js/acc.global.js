@@ -1,12 +1,12 @@
 ACC.global = {
 
     _autoload: [        
-        "dropdownToggle",
+        // "dropdownToggle",
     ],
 
-    dropdownToggle: function () {
+    /*dropdownToggle: function () {
         $('.dropdown').on("click", ".dropdown-toggle", function () {
             $('.dropdown-toggle').dropdown('toggle')
         });
-    },
+    },*/
 };
