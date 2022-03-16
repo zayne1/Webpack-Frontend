@@ -1,102 +1,117 @@
-const a = require("html-webpack-plugin"),
-    b = require("mini-css-extract-plugin"),
-    c = require("copy-webpack-plugin"),
-    d = require("path"),
-    webpack = require("webpack");
-module.exports = {
-    entry: "./src/app.js",
-    output: {
-        filename: "bundle.js",
-        path: d.resolve(__dirname, "dist"),
-        publicPath: "/"
-    },
-    plugins: [new a({
-        hash: !0,
-        title: "Webpack Example App",
-        header: "Webpack Example Title",
-        metaDesc: "Webpack Example Description",
-        template: "./src/index.html",
-        filename: "index.html",
-        inject: "body"
-    }), 
-    // new webpack.ProvidePlugin({
-    //     // $: "jquery",
-    //     // jQuery: "jquery",
-    //     // "window.jQuery": "jquery"
-    //     $: 'jquery/src/jquery',
-    //     jQuery: 'jquery/src/jquery',
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
 
-    // }), 
-    new b({
-        filename: "[name].css",
-        chunkFilename: "[id].css",
-        ignoreOrder: !1
-    }), new c({
-        patterns: [{
-            from: "src/img",
-            to: "img"
-        }, {
-            from: "src/fonts",
-            to: "fonts"
-        }],
-        options: {
-            concurrency: 50
-        }
-    })],
-    mode: "development",
+module.exports = {
+    entry: './src/app.js',
     output: {
-        clean: !0
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
+    },
+
+    plugins: [
+        new HtmlWebpackPlugin({
+            hash: true,
+            title: 'Webpack Example App',
+            header: 'Webpack Example Title',
+            metaDesc: 'Webpack Example Description',
+            template: './src/index.html',
+            filename: 'index.html',
+            inject: 'body',
+        }),
+        // new webpack.ProvidePlugin({
+        //     // $: "jquery",
+        //     // jQuery: "jquery",
+        //     // "window.jQuery": "jquery"
+        //     $: 'jquery/src/jquery',
+        //     jQuery: 'jquery/src/jquery',
+        // }), 
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // all options are optional
+            filename: '[name].css',
+            chunkFilename: '[id].css',
+            ignoreOrder: false, // Enable to remove warnings about conflicting order
+        }),
+        new CopyWebpackPlugin({
+            patterns: [{
+                from: 'src/img',
+                to: 'img'
+            }, {
+                from: 'src/fonts',
+                to: 'fonts'
+            }],
+
+            options: { concurrency: 50 },
+        }),
+    ],
+    mode: 'development',
+    output: {
+        clean: true
     },
     devServer: {
+        // contentBase: './dist',
         static: {
-            directory: d.resolve(__dirname, "dist")
+            directory: path.resolve(__dirname, 'dist')
         },
-        open: !0,
+        open: true,
+
         devMiddleware: {
-            writeToDisk: !0
+            writeToDisk: true
         }
     },
         optimization: {
         minimize: false
     },
     module: {
-        rules: [{
+        rules: 
+        [{
             test: /\.(png|svg|jpg|jpeg|gif)$/i,
-            type: "asset/resource"
+            type: 'asset/resource'
         }, {
             test: /\.(css)$/,
-            use: ["style-loader", "css-loader"]
+            use: [
+                // Creates `style` nodes from JS strings
+                'style-loader',
+                // Translates CSS into CommonJS
+                'css-loader',
+            ]
         }, {
             test: /\.scss$/,
-            include: [d.resolve(__dirname, "src", "scss")],
+            
+            include: [path.resolve(__dirname, 'src', 'scss')],
+            
             use: [{
-                loader: "style-loader"
+                loader: 'style-loader'
             }, {
-                loader: b.loader,
+                loader: MiniCssExtractPlugin.loader,
                 options: {
-                    esModule: !1
+                    esModule: false
                 }
             }, {
-                loader: "css-loader"
+                loader: 'css-loader'
             }, {
-                loader: "postcss-loader"
+                loader: 'postcss-loader'
             }, {
-                loader: "sass-loader"
+                loader: 'sass-loader'
             }]
         },
         // {
-        //     test: require.resolve("jquery"),
-        //     loader: "expose-loader",
+        //     test: require.resolve('jquery'),
+        //     loader: 'expose-loader',
         //     options: {
-        //       // exposes: ["$", "jQuery"],
+        //       // exposes: ['$', 'jQuery'],
         //         exposes: {
-        //             globalName: "$",
+        //             globalName: '$',
         //         },
         //     },
         // }
         ]
     },
     resolve: {
-        extensions: [".js", ".scss"]
+        extensions: ['.js', '.scss']
     }
 };
